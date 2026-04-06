@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nabat Static Figma Build</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;700;800&family=Noto+Serif:wght@400;500;700&family=Poppins:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #fafaf5;
+      --paper-2: #f4f3f1;
+      --paper-3: #eeeee9;
+      --ink: #012d1d;
+      --text: #414844;
+      --muted: #717973;
+      --line: rgba(1, 45, 29, 0.2);
+      --brand: #096151;
+      --brand-dark: #012d1d;
+      --accent: #63d487;
+      --accent-2: #98fd6d;
+      --glow: #c7ffdf;
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-drift: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --duration-xs: 420ms;
+      --duration-sm: 620ms;
+      --duration-md: 920ms;
+      --duration-lg: 1400ms;
+      --duration-xl: 1900ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-width: 1440px;
+      background: var(--paper);
+      color: var(--ink);
+      scroll-behavior: smooth;
+      scroll-padding-top: 120px;
+    }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      overscroll-behavior-y: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1440px;
+      height: 9394px;
+      margin: 0 auto;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .serif {
+      font-family: "Noto Serif", serif;
+      font-variation-settings: "wdth" 100;
+    }
+
+    .space {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .poppins {
+      font-family: "Poppins", sans-serif;
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      filter: blur(14px);
+      transform: translate3d(0, 72px, 0) scale(0.975);
+      will-change: opacity, transform, filter;
+      transition:
+        opacity 980ms var(--ease-drift),
+        transform var(--duration-xl) var(--ease-luxury),
+        filter 460ms var(--ease-smooth),
+        box-shadow var(--duration-sm) var(--ease-smooth),
+        background-color var(--duration-sm) var(--ease-smooth),
+        border-color var(--duration-sm) var(--ease-smooth),
+        color var(--duration-sm) var(--ease-smooth),
+        opacity var(--duration-sm) var(--ease-smooth),
+        filter var(--duration-sm) var(--ease-smooth);
+      transition-delay:
+        var(--opacity-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--blur-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--reveal-delay, 0ms),
+        var(--reveal-delay, 0ms);
+    }
+
+    .reveal-on-scroll--soft {
+      transform: translate3d(0, 48px, 0) scale(0.985);
+    }
+
+    .reveal-on-scroll--visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    @keyframes driftUp {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      50% {
+        transform: translate3d(0, -10px, 0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes driftDiagonal {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(12px, -10px, 0) scale(1.018);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes softPulse {
+      0% {
+        opacity: 0.7;
+        filter: saturate(0.96);
+      }
+      50% {
+        opacity: 1;
+        filter: saturate(1.08);
+      }
+      100% {
+        opacity: 0.7;
+        filter: saturate(0.96);
+      }
+    }
+
+    @keyframes ecoOverviewBreathe {
+      0% {
+        background-color: #e8efe8;
+        box-shadow: inset 0 0 0 1px rgba(1, 45, 29, 0.05), 0 18px 36px rgba(1, 45, 29, 0.05);
+      }
+      50% {
+        background-color: #dfe9df;
+        box-shadow: inset 0 0 0 1px rgba(1, 45, 29, 0.08), 0 24px 44px rgba(1, 45, 29, 0.08);
+      }
+      100% {
+        background-color: #e8efe8;
+        box-shadow: inset 0 0 0 1px rgba(1, 45, 29, 0.05), 0 18px 36px rgba(1, 45, 29, 0.05);
+      }
+    }
+
+    @keyframes buttonBorderGloss {
+      0% {
+        transform: translateX(-130%);
+      }
+      100% {
+        transform: translateX(130%);
+      }
+    }
+
+    @keyframes slowSweep {
+      0% {
+        transform: translate3d(-2%, 0, 0) scale(1.02);
+      }
+      50% {
+        transform: translate3d(2%, -1%, 0) scale(1.05);
+      }
+      100% {
+        transform: translate3d(-2%, 0, 0) scale(1.02);
+      }
+    }
+
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      width: 1280px;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px 25px;
+      border-bottom: 1px solid #f4f4ef;
+      background: rgba(250, 250, 249, 0.8);
+      backdrop-filter: blur(12px);
+      z-index: 5;
+      transform: translateX(-50%);
+      transition: box-shadow var(--duration-sm) var(--ease-smooth), background-color var(--duration-sm) var(--ease-smooth), border-color var(--duration-sm) var(--ease-smooth);
+    }
+
+    .top-nav--scrolled {
+      background: rgba(250, 250, 249, 0.92);
+      border-bottom-color: rgba(1, 45, 29, 0.08);
+      box-shadow: 0 14px 34px rgba(1, 45, 29, 0.08);
+    }
+
+    .top-nav__logo {
+      width: 87px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .top-nav__links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      font: 400 16px/1 "Poppins", sans-serif;
+      color: #29282b;
+    }
+
+    .top-nav__links a,
+    .nav-button,
+    .pill-button,
+    .ghost-button,
+    .mini-button,
+    .hero__media,
+    .biome-card,
+    .mission-block__note,
+    .system-light__media,
+    .ether-section__visual,
+    .ether-stat,
+    .step,
+    .bento-card,
+    .tag-chip,
+    .ai-widget,
+    .eco-card,
+    .eco-overview,
+    .member,
+    .article-large,
+    .article-small,
+    .partner-logo,
+    .contact__field,
+    .footer__links a,
+    .footer__socials img,
+    .insights__header a {
+      transition:
+        transform var(--duration-sm) var(--ease-smooth),
+        box-shadow var(--duration-sm) var(--ease-smooth),
+        background-color var(--duration-sm) var(--ease-smooth),
+        border-color var(--duration-sm) var(--ease-smooth),
+        color var(--duration-sm) var(--ease-smooth),
+        opacity var(--duration-sm) var(--ease-smooth),
+        filter var(--duration-sm) var(--ease-smooth);
+    }
+
+    .hero__media img,
+    .biome-card img,
+    .system-light__media > img,
+    .system-light__specimen,
+    .ether-section__visual img,
+    .step__meta img,
+    .bento-card img,
+    .ai-models__base,
+    .ai-widget__frame img,
+    .eco-card__hero img,
+    .member__photo img,
+    .article-large__thumb img,
+    .article-small__thumb img,
+    .partner-logo,
+    .pill-button__icon,
+    .nav-button__icon,
+    .mini-button__icon,
+    .ghost-button__circle {
+      transition: transform var(--duration-md) var(--ease-smooth), opacity var(--duration-sm) var(--ease-smooth), filter var(--duration-sm) var(--ease-smooth);
+    }
+
+    .top-nav__links a,
+    .footer__links a,
+    .insights__header a {
+      position: relative;
+    }
+
+    .top-nav__links a::after,
+    .footer__links a::after,
+    .insights__header a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 1px;
+      transform: scaleX(0);
+      transform-origin: left center;
+      background: currentColor;
+      opacity: 0.75;
+      transition: transform var(--duration-sm) var(--ease-smooth);
+    }
+
+    .nav-button,
+    .pill-button,
+    .ghost-button,
+    .mini-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .nav-button::before,
+    .pill-button::before,
+    .mini-button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.08));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      transform: translateX(-130%);
+      pointer-events: none;
+      transition: opacity 260ms var(--ease-smooth);
+    }
+
+    .nav-button::after,
+    .pill-button::after,
+    .mini-button::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 320ms var(--ease-smooth);
+    }
+
+    .nav-button {
+      height: 46px;
+      padding: 0 24px;
+      background: var(--brand);
+      border: 1px solid rgba(1, 45, 29, 0.26);
+      color: #fff;
+      font: 600 16px/1 "Poppins", sans-serif;
+      box-shadow: 0 14px 28px rgba(1, 45, 29, 0.12);
+    }
+
+    .nav-button__icon,
+    .pill-button__icon,
+    .ghost-button__icon,
+    .mini-button__icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .hero {
+      position: absolute;
+      top: 168px;
+      left: 176px;
+      width: 1200px;
+      height: 587px;
+      display: grid;
+      grid-template-columns: 574px 470px;
+      column-gap: 52px;
+      align-items: end;
+    }
+
+    .hero__copy {
+      align-self: end;
+      padding-bottom: 0;
+    }
+
+    .hero__eyebrow {
+      margin: 0 0 26px;
+      color: #695d4a;
+      font: 800 12.85px/1.6 "Manrope", sans-serif;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .hero__title {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif", serif;
+      font-size: 96px;
+      line-height: 87px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .hero__title-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+      filter: blur(6px);
+      transition:
+        opacity 540ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 760ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 540ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--hero-char-delay, 0ms);
+      will-change: opacity, transform, filter;
+    }
+
+    .hero--title-visible .hero__title-char {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+
+    .hero__title .hero__the {
+      display: block;
+      font-size: 46px;
+      line-height: 87px;
+      font-weight: 700;
+    }
+
+    .hero__title .hero__main {
+      display: inline-block;
+      margin-right: 0.18em;
+    }
+
+    .hero__title .hero__nature {
+      font-weight: 500;
+      font-stretch: semi-condensed;
+    }
+
+    .hero__sub {
+      margin: 26px 0 25px;
+      color: var(--text);
+      font: 400 24px/1.3 "Manrope", sans-serif;
+      letter-spacing: -0.5px;
+    }
+
+    .pill-button {
+      width: 230px;
+      height: 46px;
+      padding: 0 20px;
+      border: 1px solid rgba(1, 45, 29, 0.22);
+      background: rgba(99, 212, 135, 0.96);
+      color: #000;
+      font: 600 16px/1.3 "Poppins", sans-serif;
+      box-shadow: 0 14px 28px rgba(1, 45, 29, 0.1);
+    }
+
+    .hero__media {
+      width: 470px;
+      height: 587px;
+      overflow: hidden;
+      background: #ebe8e3;
+    }
+
+    .hero__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.02);
+    }
+
+    .problem {
+      position: absolute;
+      top: 767px;
+      left: 80px;
+      width: 1280px;
+      height: 539px;
+      background: var(--paper);
+      padding: 35px 0 0;
+    }
+
+    .problem__grid {
+      display: grid;
+      grid-template-columns: 640px 640px;
+    }
+
+    .problem__mission {
+      min-height: 483px;
+      padding: 96px;
+      background: var(--paper-3);
+      border-right: 1px solid rgba(193, 200, 194, 0.2);
+    }
+
+    .problem__label,
+    .section-label {
+      color: var(--muted);
+      font: 400 12px/1.6 "Manrope", sans-serif;
+      letter-spacing: 3.6px;
+      text-transform: uppercase;
+    }
+
+    .problem__headline {
+      margin: 19px 0 0;
+      font: 400 40px/1.2 "Noto Serif", serif;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .problem__headline strong {
+      color: #26af52;
+      font-weight: 700;
+    }
+
+    .problem__copy {
+      min-height: 475px;
+      padding: 157px 82px 0;
+      background: var(--paper);
+    }
+
+    .problem__copy p {
+      margin: 0 0 48px;
+      color: var(--text);
+      font: 400 24px/1.3 "Manrope", sans-serif;
+    }
+
+    .problem__copy p strong {
+      font-weight: 700;
+    }
+
+    .problem__focus {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .problem__focus-line {
+      width: 64px;
+      height: 2px;
+      margin-top: 10px;
+      background: var(--ink);
+    }
+
+    .problem__focus-text {
+      color: var(--ink);
+      font: 700 14px/1.5 "Manrope", sans-serif;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .biomes {
+      position: absolute;
+      top: 1346px;
+      left: 178px;
+      width: 1086px;
+      height: 365px;
+      overflow: hidden;
+    }
+
+    .biomes__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      height: 100%;
+    }
+
+    .biome-card {
+      position: relative;
+      overflow: hidden;
+      background: #faf9f6;
+      transform: translate3d(0, 0, 0) scale(1);
+      box-shadow: 0 10px 28px rgba(1, 45, 29, 0);
+      will-change: transform, box-shadow;
+      transition:
+        transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .biome-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      opacity: 0;
+      transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .biome-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(1, 45, 29, 0.02) 0%, rgba(1, 45, 29, 0.18) 100%);
+      opacity: 0;
+      transition: opacity 820ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .biome-card img {
+      width: 100%;
+      height: 541px;
+      object-fit: cover;
+      opacity: 0.82;
+      transform: translate3d(0, calc(-86px + var(--biome-parallax, 0px)), 0) scale(1.02);
+      transform-origin: center center;
+      filter: saturate(0.94) contrast(1.01);
+      transition:
+        transform 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .biome-card__label {
+      position: absolute;
+      top: 44px;
+      left: 44px;
+      width: 294px;
+      padding: 29px 29px 29px 31px;
+      border-left: 2px solid var(--ink);
+      background: rgba(250, 249, 246, 0.76);
+      backdrop-filter: blur(14px);
+      font: 400 36.69px/40.36px "Noto Serif", serif;
+      color: #1a1c1a;
+      transform: translate3d(0, 0, 0);
+      transition:
+        transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 900ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 2;
+    }
+
+    .mission-block {
+      position: absolute;
+      top: 1753px;
+      left: 80px;
+      width: 1280px;
+      height: 629px;
+      padding: 128px 97px;
+      background: var(--brand-dark);
+      color: #fff;
+    }
+
+    .mission-block__grid {
+      display: grid;
+      grid-template-columns: 511px 511px;
+      column-gap: 64px;
+      align-items: center;
+    }
+
+    .mission-block__title {
+      margin: 0 0 21px;
+      width: 377px;
+      font: 400 40px/1.2 "Noto Serif", serif;
+      letter-spacing: -0.5px;
+    }
+
+    .mission-block__text {
+      margin: 0;
+      color: #ccede1;
+      font: 400 24px/1.3 "Space Grotesk", sans-serif;
+    }
+
+    .mission-block__note {
+      position: relative;
+      padding: 48px;
+      background: #f4f3f1;
+      color: var(--ink);
+    }
+
+    .mission-block__note::before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      left: -16px;
+      width: 32px;
+      height: 32px;
+      background: var(--brand-dark);
+    }
+
+    .mission-block__note p {
+      margin: 0;
+      font: 400 24px/1.3 "Space Grotesk", sans-serif;
+    }
+
+    .mission-block__note strong {
+      font-weight: 700;
+    }
+
+    .mission-block__note b {
+      display: block;
+      margin-top: 32px;
+      font: 700 21px/1.35 "Space Grotesk", sans-serif;
+      letter-spacing: 0.96px;
+      text-transform: uppercase;
+    }
+
+    .system-light {
+      position: absolute;
+      top: 2472.5px;
+      left: 80px;
+      width: 1280px;
+      height: 558px;
+      padding: 128px 99px;
+      background: #faf9f6;
+    }
+
+    .system-light__grid {
+      display: grid;
+      grid-template-columns: 423px 517px;
+      column-gap: 142px;
+      align-items: start;
+    }
+
+    .system-light__title {
+      margin: 34px 0 0;
+      font: 700 72px/60px "Noto Serif", serif;
+      color: #1a1c1a;
+    }
+
+    .system-light__body {
+      margin: 16px 0 0;
+      font: 400 24px/29.25px "Space Grotesk", sans-serif;
+      color: var(--text);
+    }
+
+    .system-light__media {
+      position: relative;
+      width: 517px;
+      height: 500px;
+      overflow: hidden;
+      background: #e9e8e5;
+    }
+
+    .system-light__media > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate3d(0, var(--nabat-parallax, 0px), 0) scale(1.03);
+    }
+
+    .system-light__badge {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      padding: 4px 12px;
+      background: var(--brand-dark);
+      color: #fff;
+      font: 400 12px/18px "Space Grotesk", sans-serif;
+      letter-spacing: 0.96px;
+      text-transform: uppercase;
+    }
+
+    .system-light__specimen {
+      position: absolute;
+      inset: 122px auto auto 131px;
+      width: 256px;
+      height: 256px;
+      padding: 1px;
+      border: 1px solid rgba(1, 45, 29, 0.2);
+      display: grid;
+      place-items: center;
+    }
+
+    .system-light__specimen img {
+      width: 192px;
+      height: 192px;
+      object-fit: cover;
+    }
+
+    .ether-section {
+      position: absolute;
+      top: 3009px;
+      left: 80px;
+      width: 1280px;
+      height: 796px;
+      padding: 135px 53px 0;
+      overflow: hidden;
+      background: var(--brand-dark);
+      color: #fff;
+    }
+
+    .ether-section::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 640px;
+      height: 888px;
+      opacity: 0.3;
+      mix-blend-mode: screen;
+      background: radial-gradient(circle at center, rgba(193, 200, 194, 1) 3.5%, rgba(193, 200, 194, 0) 3.6%);
+      transform: translateY(-92px);
+    }
+
+    .ether-section__top {
+      position: relative;
+      display: grid;
+      grid-template-columns: 595px 352px;
+      column-gap: 184px;
+      padding: 0 48px;
+      z-index: 1;
+    }
+
+    .ether-section__title {
+      margin: 0;
+      font: 700 72px/1.15 "Noto Serif", serif;
+    }
+
+    .ether-section__title-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+      filter: blur(6px);
+      transition:
+        opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--ether-char-delay, 0ms);
+      will-change: opacity, transform, filter;
+    }
+
+    .ether-section--title-visible .ether-section__title-char {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+
+    .ether-section__copy {
+      margin: 24px 0 0;
+      color: var(--glow);
+      font: 400 24px/1.3 "Space Grotesk", sans-serif;
+    }
+
+    .ether-section__copy p {
+      margin: 0 0 31px;
+    }
+
+    .ether-section__visual {
+      position: relative;
+      width: 352px;
+      height: 352px;
+      padding: 33px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(27, 67, 50, 0.4);
+    }
+
+    .ether-section__visual img {
+      width: 286px;
+      height: 286px;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .ether-section__stats {
+      position: absolute;
+      left: 101px;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: 1080px;
+      gap: 0;
+      z-index: 1;
+    }
+
+    .ether-stat {
+      position: relative;
+      height: 169px;
+      padding: 25px 34px;
+      overflow: hidden;
+      backdrop-filter: blur(48px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ether-stat::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(199, 255, 223, 0.14), rgba(255, 255, 255, 0));
+      opacity: 0;
+      transition: opacity var(--duration-md) var(--ease-smooth);
+      pointer-events: none;
+    }
+
+    .ether-stat:nth-child(1) { background: rgba(137, 173, 173, 0.2); }
+    .ether-stat:nth-child(2) { background: rgba(164, 240, 245, 0.2); }
+    .ether-stat:nth-child(3) { background: rgba(181, 255, 211, 0.2); }
+    .ether-stat:nth-child(4) { background: rgba(231, 244, 238, 0.2); }
+
+    .ether-stat__icon {
+      width: 49px;
+      height: 48px;
+      margin-bottom: 18px;
+      object-fit: contain;
+    }
+
+    .ether-stat__value {
+      font: 400 24px/29.25px "Space Grotesk", sans-serif;
+      color: var(--glow);
+    }
+
+    .ether-stat__label {
+      font: 400 14px/28.21px "Poppins", sans-serif;
+      color: #cbe0d2;
+    }
+
+    .pipeline {
+      position: absolute;
+      top: 3816px;
+      left: 80px;
+      width: 1280px;
+      height: 920px;
+      padding: 0;
+      overflow: visible;
+      z-index: 3;
+    }
+
+    .pipeline__slide {
+      position: relative;
+      height: 100%;
+      padding: 118px 100px 92px;
+      background: var(--paper-2);
+      border: 1px solid rgba(1, 45, 29, 0.08);
+      box-shadow: 0 32px 72px rgba(1, 45, 29, 0.12);
+      overflow: hidden;
+      transform: translate3d(0, var(--pipeline-parallax, 0px), 0);
+      will-change: transform;
+      transition: transform 220ms linear;
+    }
+
+    .pipeline__title {
+      margin: 0;
+      font: 400 40px/1.2 "Noto Serif", serif;
+      letter-spacing: -0.5px;
+    }
+
+    .pipeline__sub {
+      margin: 16px 0 0;
+      color: var(--text);
+      font: 400 25px/1.3 "Manrope", sans-serif;
+    }
+
+    .pipeline__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 328px);
+      gap: 64px 48px;
+      margin-top: 72px;
+    }
+
+    .step {
+      position: relative;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #012d1d, #63d487);
+      transition: width var(--duration-md) var(--ease-smooth);
+    }
+
+    .step__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      color: rgba(1, 45, 29, 0.4);
+      font: 400 14px/1.5 "Manrope", sans-serif;
+    }
+
+    .step__meta img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .step h3 {
+      margin: 28px 0 15px;
+      font: 700 24px/1.3 "Noto Serif", serif;
+      color: #1a1c19;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--text);
+      font: 400 16px/1.5 "Manrope", sans-serif;
+    }
+
+    .access {
+      position: absolute;
+      top: 4609px;
+      left: 80px;
+      width: 1280px;
+      min-height: 921px;
+      padding: 128px 101px 122px;
+      overflow: hidden;
+      background: var(--paper);
+      isolation: auto;
+    }
+
+    .access::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background: radial-gradient(circle at center, #717973 1.47%, transparent 1.6%);
+    }
+
+    .access__grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 423px 565px;
+      column-gap: 48px;
+      z-index: 1;
+      transform: translate3d(0, var(--access-grid-shift, 0px), 0);
+      will-change: transform;
+      transition: transform 220ms linear;
+    }
+
+    .access__intro {
+      position: relative;
+      z-index: 3;
+      align-self: start;
+    }
+
+    .access__intro::before {
+      content: "";
+      position: absolute;
+      inset: -28px -24px -24px -24px;
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(250, 249, 246, 0.82) 0%, rgba(250, 249, 246, 0.46) 100%);
+      border: 1px solid rgba(113, 121, 115, 0.14);
+      box-shadow: 0 26px 54px rgba(1, 45, 29, var(--access-intro-shadow, 0.04));
+      backdrop-filter: blur(12px);
+      opacity: 0.96;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .access__title {
+      margin: 16px 0 0;
+      font: 400 96px/1.15 "Noto Serif", serif;
+      letter-spacing: -0.5px;
+    }
+
+    .access__body {
+      width: 411px;
+      margin: 16px 0 0;
+      color: var(--text);
+      font: 400 20px/1.35 "Space Grotesk", sans-serif;
+    }
+
+    .access__bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 224px 224px 264px;
+      gap: 1px;
+      padding: 1px;
+      border: 1px solid rgba(113, 121, 115, 0.2);
+      background: rgba(113, 121, 115, 0.2);
+    }
+
+    .bento-card {
+      padding: 38px 32px 0;
+      background: #faf9f6;
+    }
+
+    .bento-card:nth-child(odd) {
+      transform-origin: left top;
+    }
+
+    .bento-card:nth-child(even) {
+      transform-origin: right top;
+    }
+
+    .bento-card img {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+    }
+
+    .bento-card h3 {
+      margin: 31px 0 11px;
+      font: 700 14px/1.5 "Space Grotesk", sans-serif;
+      letter-spacing: 1.12px;
+      text-transform: uppercase;
+    }
+
+    .bento-card p {
+      margin: 0;
+      color: var(--text);
+      font: 400 16px/1.5 "Manrope", sans-serif;
+    }
+
+    .ai-models {
+      display: none;
+      position: absolute;
+      top: 5499px;
+      left: 80px;
+      width: 1280px;
+      height: 857px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #3f3f3f 0%, #1e2724 40%, #0d1612 100%);
+    }
+
+    .ai-models__bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 48% 42%, rgba(117, 249, 220, 0.22) 0%, rgba(4, 34, 28, 0.2) 26%, rgba(0, 0, 0, 0) 56%);
+    }
+
+    .ai-models__base {
+      position: absolute;
+      left: 128px;
+      top: 145px;
+      width: 1024px;
+      height: 527px;
+      object-fit: cover;
+      opacity: 0.92;
+      transform: translate3d(0, var(--ai-parallax, 0px), 0) scale(1.02);
+    }
+
+    .ai-models__title {
+      position: absolute;
+      left: 177px;
+      top: 178px;
+      width: 997px;
+      color: #fff;
+      font: 400 40px/44px "Noto Serif", serif;
+    }
+
+    .ai-models__tags-left,
+    .ai-models__tags-right {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ai-models__tags-left {
+      left: 100px;
+      top: 221px;
+    }
+
+    .ai-models__tags-right {
+      right: 100px;
+      top: 221px;
+      align-items: flex-end;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 33px;
+      padding: 0 11px;
+      border: 1px solid #404040;
+      background: rgba(48, 48, 48, 0.83);
+      color: #fff;
+      backdrop-filter: blur(11px);
+      box-shadow: 0 0.34px 1.73px rgba(0, 0, 0, 0.03);
+      font: 400 12.44px/21.33px "Poppins", sans-serif;
+      white-space: nowrap;
+    }
+
+    .tag-chip::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      background: url("https://www.figma.com/api/mcp/asset/ecb7eeeb-e7ca-4e78-a017-6b80d3abcf71") center/contain no-repeat;
+      flex: 0 0 auto;
+    }
+
+    .ai-widget {
+      position: absolute;
+      border: 1px solid #85f0c2;
+      background: rgba(48, 48, 48, 0.83);
+      color: #fff;
+      backdrop-filter: blur(11px);
+      box-shadow: 0 0.34px 1.73px rgba(0, 0, 0, 0.03);
+    }
+
+    .article-large,
+    .member {
+      position: relative;
+    }
+
+    .ai-widget--health {
+      left: 496px;
+      top: 221px;
+      width: 289px;
+      padding: 11px;
+    }
+
+    .ai-widget--distribution {
+      left: 100px;
+      bottom: 160px;
+      width: 365px;
+      padding: 11px;
+    }
+
+    .ai-widget--classification {
+      right: 100px;
+      bottom: 160px;
+      width: 368px;
+      padding: 11px;
+    }
+
+    .ai-widget__title {
+      margin: 0 0 10px;
+      font: 600 14px/15px "Poppins", sans-serif;
+    }
+
+    .ai-widget__frame {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(154, 154, 154, 0.35);
+    }
+
+    .ai-widget__frame img {
+      width: 100%;
+      display: block;
+    }
+
+    .ecosystem {
+      position: absolute;
+      top: 5499px;
+      left: 82px;
+      width: 1280px;
+      height: 998px;
+      padding: 96px;
+      background: #f4f3f1;
+    }
+
+    .ecosystem__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+
+    .ecosystem__head h2 {
+      margin: 0;
+      width: 615px;
+      font: 400 36px/1.2 "Noto Serif", serif;
+      letter-spacing: -0.8px;
+    }
+
+    .ecosystem__cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      height: 507px;
+      padding: 1px;
+      background: rgba(113, 121, 115, 0.2);
+    }
+
+    .eco-card {
+      position: relative;
+      padding: 0 32px 32px;
+      background: #faf9f6;
+    }
+
+    .eco-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(99, 212, 135, 0);
+      pointer-events: none;
+      transition: border-color var(--duration-sm) var(--ease-smooth);
+    }
+
+    .hero.reveal-on-scroll--visible .hero__media,
+    .system-light.reveal-on-scroll--visible .system-light__media,
+    .team.reveal-on-scroll--visible .member__photo,
+    .contact.reveal-on-scroll--visible .contact__form {
+      animation: driftUp 11s ease-in-out 0.35s infinite;
+    }
+
+    .contact.reveal-on-scroll--visible .contact__intro {
+      animation: driftDiagonal 13s ease-in-out 0.3s infinite;
+    }
+
+    .system-light.reveal-on-scroll--visible .system-light__specimen,
+    .ether-section.reveal-on-scroll--visible .ether-section__visual,
+    .eco-overview.reveal-on-scroll--visible {
+      animation: driftDiagonal 14s ease-in-out 0.4s infinite;
+    }
+
+    .ai-models.reveal-on-scroll--visible .ai-models__bg,
+    .ether-section.reveal-on-scroll--visible::after {
+      animation: softPulse 8.5s ease-in-out 0.4s infinite;
+    }
+
+    .ai-models.reveal-on-scroll--visible .ai-models__base {
+      animation: slowSweep 16s ease-in-out 0.6s infinite;
+      transform-origin: center center;
+    }
+
+    .eco-card__hero {
+      position: absolute;
+      left: 14px;
+      top: 16px;
+      width: 330px;
+      height: 245px;
+      overflow: hidden;
+    }
+
+    .eco-card__hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate3d(0, var(--eco-card-parallax, 0px), 0) scale(1.02);
+    }
+
+    .eco-card__copy {
+      position: absolute;
+      left: 32px;
+      right: 32px;
+      top: 305px;
+    }
+
+    .eco-card__copy h3 {
+      margin: 0 0 16px;
+      font: 400 20px/1.35 "Noto Serif", serif;
+      letter-spacing: -0.2px;
+    }
+
+    .eco-card__copy p {
+      margin: 0;
+      color: #57605d;
+      font: 400 14px/1.5 "Space Grotesk", sans-serif;
+      letter-spacing: 0.15px;
+    }
+
+    .eco-overview {
+      position: absolute;
+      left: 97px;
+      bottom: 101px;
+      width: 1087px;
+      height: 192px;
+      border: 1px solid rgba(1, 45, 29, 0.14);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 23px;
+      background: #e8efe8;
+      animation: ecoOverviewBreathe 10s ease-in-out 0.3s infinite;
+    }
+
+    .eco-overview::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 38%, rgba(1, 45, 29, 0.04) 100%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .eco-overview__title,
+    .eco-overview__action {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eco-overview__title {
+      font: 400 16px/20px "Poppins", sans-serif;
+      color: #29282b;
+    }
+
+    .eco-overview__action {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 1116px;
+    }
+
+    .eco-overview__line {
+      flex: 1 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(253, 253, 251, 0.46), #3d362a);
+    }
+
+    .eco-overview__line:last-child {
+      background: linear-gradient(90deg, #3d362a, rgba(253, 253, 251, 0.25));
+    }
+
+    .team {
+      position: absolute;
+      top: 6463px;
+      left: 80px;
+      width: 1280px;
+      height: 703px;
+      padding: 128px 48px 0;
+      background: var(--paper);
+    }
+
+    .team__heading h2 {
+      margin: 0;
+      font: 700 48px/1.15 "Noto Serif", serif;
+      letter-spacing: -1.2px;
+    }
+
+    .team__heading p {
+      width: 576px;
+      margin: 16px 0 0;
+      color: var(--text);
+      font: 400 16px/1.5 "Manrope", sans-serif;
+    }
+
+    .team__grid {
+      display: grid;
+      grid-template-columns: repeat(6, 170.67px);
+      gap: 32px;
+      margin-top: 80px;
+    }
+
+    .member__photo {
+      width: 170.67px;
+      height: 213.33px;
+      overflow: hidden;
+      background: var(--paper-3);
+    }
+
+    .member__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .member__name {
+      margin: 16px 0 0;
+      font: 700 18px/1.35 "Noto Serif", serif;
+    }
+
+    .member__role {
+      color: var(--muted);
+      font: 400 10px/1.6 "Manrope", sans-serif;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .team__footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 43px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .team__footer-line {
+      flex: 1 0 0;
+      height: 0.5px;
+      background: #29282b;
+    }
+
+    .ghost-button {
+      height: 46px;
+      padding: 0 20px 0 10px;
+      border: 1.5px solid rgba(0, 0, 0, 0.05);
+      background: #fff;
+      color: #000;
+      font: 600 16px/1.5 "Poppins", sans-serif;
+    }
+
+    .ghost-button__circle {
+      display: inline-grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      border-radius: 999px;
+      background: url("https://www.figma.com/api/mcp/asset/61165036-c7c0-4148-af50-d6fcab44ace5") center/contain no-repeat;
+    }
+
+    .insights {
+      position: absolute;
+      top: 7177px;
+      left: 80px;
+      width: 1280px;
+      height: 903px;
+      padding: 128px 54px;
+      background: var(--paper-3);
+    }
+
+    .insights__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 48px;
+    }
+
+    .insights__header h2 {
+      margin: 0;
+      font: 700 48px/1.15 "Noto Serif", serif;
+      letter-spacing: -0.5px;
+    }
+
+    .insights__header a {
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--ink);
+      color: var(--ink);
+      font: 400 12px/1.6 "Manrope", sans-serif;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .insights__grid {
+      display: grid;
+      grid-template-columns: 514px 514px;
+      gap: 48px;
+      padding: 128px 48px 0;
+    }
+
+    .article-large__thumb {
+      width: 514px;
+      height: 319.5px;
+      overflow: hidden;
+    }
+
+    .article-large__thumb img,
+    .article-small__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .article-meta {
+      margin-top: 31px;
+      color: #3c6a00;
+      font: 700 10px/1.6 "Manrope", sans-serif;
+      letter-spacing: 0.25px;
+      text-transform: uppercase;
+    }
+
+    .article-large h3 {
+      margin: 17px 0 16px;
+      font: 700 30px/1.25 "Noto Serif", serif;
+      color: #1a1c19;
+    }
+
+    .article-large p {
+      margin: 0;
+      color: var(--text);
+      font: 400 16px/1.5 "Manrope", sans-serif;
+    }
+
+    .article-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .article-small {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 24px;
+      padding-bottom: 33px;
+      border-bottom: 1px solid rgba(193, 200, 194, 0.3);
+    }
+
+    .article-small__thumb {
+      width: 128px;
+      height: 128px;
+      overflow: hidden;
+    }
+
+    .article-small__meta {
+      color: var(--muted);
+      font: 400 10px/15px "Manrope", sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .article-small h4 {
+      margin: 23px 0 10px;
+      font: 700 20px/28px "Noto Serif", serif;
+      color: #1a1c19;
+    }
+
+    .article-small p {
+      margin: 0;
+      color: var(--text);
+      font: 400 14px/20px "Manrope", sans-serif;
+    }
+
+    .partners {
+      position: absolute;
+      top: 8079px;
+      left: 0;
+      width: 1440px;
+      height: 412px;
+      padding-top: 40px;
+      background: var(--paper);
+    }
+
+    .partners h2 {
+      margin: 0;
+      padding: 0 130px 30px;
+      font: 700 48px/1.2 "Noto Serif", serif;
+    }
+
+    .partners__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      padding: 22px 108px 18px;
+      min-height: 132px;
+      border-top: 1px solid rgba(1, 45, 29, 0.1);
+      border-bottom: 1px solid rgba(1, 45, 29, 0.1);
+    }
+
+    .partner-logo-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 88px;
+      padding: 0 24px;
+      overflow: visible;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translate3d(0, 28px, 0) scale(0.98);
+      will-change: transform, opacity, filter;
+      transition:
+        transform 820ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .partner-logo-shell + .partner-logo-shell {
+      border-left: 1px solid rgba(1, 45, 29, 0.08);
+    }
+
+    .partners.reveal-on-scroll--visible .partner-logo-shell {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    .partner-logo-shell--1 {
+      width: 182px;
+      transition-delay: 70ms;
+    }
+
+    .partner-logo-shell--2 {
+      width: 218px;
+      transition-delay: 180ms;
+    }
+
+    .partner-logo-shell--3 {
+      width: 198px;
+      transition-delay: 290ms;
+    }
+
+    .partner-logo-shell--4 {
+      width: 236px;
+      transition-delay: 400ms;
+    }
+
+    .partner-logo-shell--5 {
+      width: 170px;
+      transition-delay: 510ms;
+    }
+
+    .partner-logo {
+      width: 100%;
+      height: auto;
+      max-height: 72px;
+      object-fit: contain;
+      mix-blend-mode: darken;
+      opacity: 0.66;
+      filter: grayscale(1) contrast(1) brightness(0.82);
+    }
+
+    .contact {
+      position: absolute;
+      top: 8491px;
+      left: 27px;
+      width: 1385px;
+      height: 694px;
+      padding: 78px 24px 70px;
+      background: #fff;
+    }
+
+    .contact__shell {
+      width: 1216px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .contact h2 {
+      margin: 0 0 28px;
+      font: 700 48px/1.15 "Noto Serif", serif;
+      letter-spacing: -1.2px;
+    }
+
+    .contact__form {
+      width: auto;
+      margin: 0;
+      padding: 0;
+      border-left: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .contact__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 22px;
+    }
+
+    .contact__field {
+      position: relative;
+      display: block;
+      min-height: 76px;
+      padding: 12px 0 10px;
+      border: 0;
+      border-bottom: 1px solid rgba(1, 45, 29, 0.12);
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      transform: none;
+      transition:
+        border-color var(--duration-sm) var(--ease-smooth),
+        color var(--duration-sm) var(--ease-smooth);
+    }
+
+    .contact__field::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+      border-radius: 999px;
+      background: var(--brand);
+      opacity: 0;
+      transform: scaleX(0.14);
+      transform-origin: left center;
+      transition: opacity 260ms var(--ease-smooth), transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .contact__field--filled,
+    .contact__field:focus-within {
+      border-color: rgba(1, 45, 29, 0.22);
+    }
+
+    .contact__field--filled::after,
+    .contact__field:focus-within::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .contact__field--phone {
+      padding-bottom: 14px;
+    }
+
+    .contact__field--select::before {
+      content: "";
+      position: absolute;
+      right: 22px;
+      bottom: 28px;
+      width: 10px;
+      height: 10px;
+      border-right: 1.8px solid rgba(1, 45, 29, 0.52);
+      border-bottom: 1.8px solid rgba(1, 45, 29, 0.52);
+      transform: rotate(45deg);
+      pointer-events: none;
+      transition: transform var(--duration-sm) var(--ease-smooth), border-color var(--duration-sm) var(--ease-smooth);
+    }
+
+    .contact__field--select:focus-within::before {
+      transform: translateY(-3px) rotate(225deg);
+      border-color: var(--brand);
+    }
+
+    .contact__field--full {
+      grid-column: 1 / -1;
+      min-height: 138px;
+    }
+
+    .contact__label {
+      display: block;
+      margin-bottom: 10px;
+      color: rgba(41, 40, 43, 0.45);
+      font: 500 10px/1.4 "Space Grotesk", sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: color var(--duration-sm) var(--ease-smooth), transform var(--duration-sm) var(--ease-smooth);
+    }
+
+    .contact__field--filled .contact__label,
+    .contact__field:focus-within .contact__label {
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
+
+    .contact__control {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font: 400 15px/1.5 "Poppins", sans-serif;
+      padding: 0;
+      outline: none;
+      appearance: none;
+    }
+
+    .contact__control::placeholder {
+      color: rgba(41, 40, 43, 0.3);
+    }
+
+    .contact__control--select {
+      padding-right: 28px;
+      color: rgba(41, 40, 43, 0.68);
+      cursor: pointer;
+    }
+
+    .contact__control--message {
+      min-height: 72px;
+      resize: none;
+    }
+
+    .contact__flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      color: rgba(41, 40, 43, 0.42);
+      font: 400 12px/1.3 "Poppins", sans-serif;
+    }
+
+    .contact__flag img {
+      width: 15px;
+      height: 12px;
+      object-fit: cover;
+      box-shadow: none;
+    }
+
+    .contact__submit {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(1, 45, 29, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .contact__status {
+      color: rgba(41, 40, 43, 0.54);
+      font: 400 13px/1.6 "Manrope", sans-serif;
+      transition: color var(--duration-sm) var(--ease-smooth), opacity var(--duration-sm) var(--ease-smooth);
+    }
+
+    .contact__status strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .contact__form--submitted .contact__status {
+      color: var(--brand);
+    }
+
+    .contact__form--submitted .mini-button {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: none;
+      border-color: var(--brand);
+    }
+
+    .contact .mini-button {
+      width: 188px;
+      height: 40px;
+      padding: 0 16px;
+      border: 1px solid rgba(1, 45, 29, 0.22);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      font: 500 14px/1 "Poppins", sans-serif;
+      box-shadow: none;
+    }
+
+    .contact .mini-button__icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mini-button {
+      width: 221px;
+      height: 44px;
+      padding: 0 19px;
+      border: 1px solid rgba(1, 45, 29, 0.22);
+      background: rgba(99, 212, 135, 0.96);
+      color: #000;
+      font: 600 15.39px/1.3 "Poppins", sans-serif;
+      box-shadow: 0 14px 28px rgba(1, 45, 29, 0.1);
+    }
+
+    .footer {
+      position: absolute;
+      top: 9240px;
+      left: 0;
+      width: 1440px;
+      height: 154px;
+      background: var(--brand);
+      color: #fff;
+      padding-top: 16px;
+    }
+
+    .footer__inner {
+      width: 1156px;
+      margin: 0 auto;
+    }
+
+    .footer__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer__brand {
+      width: 168px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 32px;
+      font: 400 16px/1 "Poppins", sans-serif;
+    }
+
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      font: 400 14px/1 "Poppins", sans-serif;
+    }
+
+    .footer__socials {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer__socials img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .nav-button:focus-visible,
+    .pill-button:focus-visible,
+    .ghost-button:focus-visible,
+    .mini-button:focus-visible,
+    .top-nav__links a:focus-visible,
+    .footer__links a:focus-visible,
+    .insights__header a:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    @media (hover: hover) {
+      .top-nav__links a:hover,
+      .footer__links a:hover,
+      .insights__header a:hover {
+        color: var(--brand);
+      }
+
+      .top-nav__links a:hover::after,
+      .footer__links a:hover::after,
+      .insights__header a:hover::after {
+        transform: scaleX(1);
+      }
+
+      .nav-button:hover,
+      .pill-button:hover,
+      .mini-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 52px rgba(1, 45, 29, 0.28);
+        background: linear-gradient(135deg, #103b2d 0%, #0c2f24 48%, #062019 100%);
+        border-color: rgba(174, 227, 204, 0.42);
+        color: #f4f8f5;
+      }
+
+      .nav-button:hover::before,
+      .pill-button:hover::before,
+      .mini-button:hover::before {
+        opacity: 1;
+        animation: buttonBorderGloss 1200ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .nav-button:hover::after,
+      .pill-button:hover::after,
+      .mini-button:hover::after {
+        opacity: 1;
+      }
+
+      .nav-button:hover {
+        color: #f4f8f5;
+      }
+
+      .nav-button:hover .nav-button__icon,
+      .pill-button:hover .pill-button__icon,
+      .mini-button:hover .mini-button__icon {
+        transform: translateX(6px) rotate(7deg);
+        filter: brightness(0) invert(1);
+      }
+
+      .ghost-button:hover {
+        transform: translateY(-4px);
+        background: #012d1d;
+        color: #fff;
+        box-shadow: 0 22px 44px rgba(1, 45, 29, 0.14);
+      }
+
+      .ghost-button:hover .ghost-button__circle {
+        transform: rotate(18deg) scale(1.06);
+      }
+
+      .hero__media:hover,
+      .system-light__media:hover,
+      .ether-section__visual:hover,
+      .eco-overview:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 38px 72px rgba(1, 45, 29, 0.16);
+      }
+
+      .hero__media:hover img,
+      .system-light__media:hover > img,
+      .ether-section__visual:hover img,
+      .article-large:hover .article-large__thumb img,
+      .article-small:hover .article-small__thumb img,
+      .member:hover .member__photo img {
+        transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.08);
+      }
+
+      .system-light__media:hover > img {
+        transform: translate3d(0, var(--nabat-parallax, 0px), 0) scale(1.08);
+      }
+
+      .eco-overview:hover {
+        border-color: rgba(1, 45, 29, 0.2);
+      }
+
+      .system-light__media:hover .system-light__specimen {
+        transform: translate(-10px, -10px) rotate(-5deg);
+      }
+
+      .biome-card:hover {
+        transform: translate3d(0, -6px, 0) scale(1.008);
+        box-shadow: 0 28px 48px rgba(1, 45, 29, 0.14);
+      }
+
+      .biome-card:hover::before {
+        opacity: 1;
+      }
+
+      .biome-card:hover::after {
+        opacity: 1;
+      }
+
+      .biome-card:hover img {
+        transform: translate3d(0, calc(-90px + var(--biome-parallax, 0px)), 0) scale(1.055);
+        opacity: 0.9;
+        filter: saturate(1) contrast(1.03);
+      }
+
+      .biome-card:hover .biome-card__label {
+        transform: translate3d(0, 7px, 0);
+        background: rgba(250, 249, 246, 0.88);
+        border-color: rgba(1, 45, 29, 0.9);
+        box-shadow: 0 18px 36px rgba(1, 45, 29, 0.08);
+      }
+
+      .mission-block__note:hover {
+        transform: translateY(-8px) rotate(-0.55deg);
+        box-shadow: 0 34px 68px rgba(0, 0, 0, 0.22);
+      }
+
+      .mission-block__note:hover::before {
+        transform: translate(6px, 6px);
+      }
+
+      .ether-section__visual:hover {
+        border-color: rgba(199, 255, 223, 0.45);
+        box-shadow: 0 28px 60px rgba(151, 253, 109, 0.12);
+      }
+
+      .ether-stat:hover {
+        transform: translateY(-14px);
+        border-color: rgba(199, 255, 223, 0.3);
+        box-shadow: 0 28px 54px rgba(0, 0, 0, 0.22);
+      }
+
+      .ether-stat:hover::after {
+        opacity: 1;
+      }
+
+      .ether-stat:hover .ether-stat__icon {
+        transform: translateY(-2px) scale(1.06);
+      }
+
+      .step:hover {
+        transform: translateY(-10px);
+      }
+
+      .step:hover::before {
+        width: 100%;
+      }
+
+      .step:hover .step__meta img {
+        transform: rotate(18deg) scale(1.12);
+      }
+
+      .step:hover h3 {
+        color: var(--brand);
+      }
+
+      .bento-card:hover {
+        transform: translateY(-9px) scale(1.02);
+        background: linear-gradient(180deg, #ffffff 0%, #eef8ef 100%);
+        box-shadow: 0 28px 56px rgba(1, 45, 29, 0.12);
+      }
+
+      .bento-card:hover img {
+        transform: rotate(-12deg) scale(1.18);
+      }
+
+      .tag-chip:hover {
+        transform: translateX(12px);
+        border-color: rgba(152, 253, 109, 0.8);
+        background: rgba(78, 97, 91, 0.92);
+        box-shadow: 0 0 0 1px rgba(152, 253, 109, 0.2), 0 20px 40px rgba(0, 0, 0, 0.18);
+      }
+
+      .ai-models:hover .ai-models__base {
+        transform: translate3d(0, var(--ai-parallax, 0px), 0) scale(1.04);
+        filter: saturate(1.08) brightness(1.04);
+      }
+
+      .ai-widget:hover {
+        transform: translateY(-12px);
+        border-color: #c7ffdf;
+        box-shadow: 0 32px 60px rgba(0, 0, 0, 0.28);
+      }
+
+      .ai-widget:hover .ai-widget__frame img {
+        transform: scale(1.05);
+      }
+
+      .eco-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 32px 62px rgba(1, 45, 29, 0.14);
+      }
+
+      .eco-card:hover::after {
+        border-color: rgba(99, 212, 135, 0.5);
+      }
+
+      .eco-card:hover .eco-card__hero img {
+        transform: translate3d(0, var(--eco-card-parallax, 0px), 0) scale(1.09);
+      }
+
+      .member:hover {
+        transform: translateY(-10px);
+      }
+
+      .member:hover .member__name {
+        color: var(--brand);
+      }
+
+      .member:hover .member__photo {
+        box-shadow: 0 28px 56px rgba(1, 45, 29, 0.18);
+      }
+
+      .member:hover .member__photo img {
+        filter: saturate(1.08) contrast(1.03);
+      }
+
+      .article-large:hover,
+      .article-small:hover {
+        transform: translateY(-9px);
+      }
+
+      .article-large:hover h3,
+      .article-small:hover h4 {
+        color: var(--brand);
+      }
+
+      .partner-logo-shell:hover {
+        transform: translate3d(0, -2px, 0);
+      }
+
+      .partner-logo-shell:hover .partner-logo {
+        transform: scale(1.02);
+        filter: grayscale(0.55) contrast(1.02) brightness(0.74);
+        opacity: 0.9;
+      }
+
+      .contact__field:hover,
+      .contact__field:focus-within {
+        transform: none;
+        border-color: rgba(1, 45, 29, 0.22);
+        box-shadow: none;
+      }
+
+      .contact__field:hover .contact__label {
+        color: var(--brand);
+      }
+
+      .contact__field:hover .contact__control,
+      .contact__field:focus-within .contact__control {
+        color: rgba(1, 45, 29, 0.86);
+      }
+
+      .contact .mini-button:hover {
+        transform: none;
+        box-shadow: none;
+        background: var(--brand);
+        color: #fff;
+      }
+
+      .contact .mini-button:hover .mini-button__icon {
+        transform: translateX(3px);
+      }
+
+      .footer__socials img:hover {
+        transform: translateY(-5px) scale(1.1);
+        filter: brightness(1.18);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html, body {
+        scroll-behavior: auto;
+      }
+
+      .reveal-on-scroll,
+      .reveal-on-scroll--soft,
+      .reveal-on-scroll--visible,
+      .hero.reveal-on-scroll--visible .hero__media,
+      .system-light.reveal-on-scroll--visible .system-light__media,
+      .team.reveal-on-scroll--visible .member__photo,
+      .contact.reveal-on-scroll--visible .contact__form,
+      .hero--title-visible .hero__title-char,
+      .ether-section--title-visible .ether-section__title-char,
+      .pipeline__slide,
+      .access__grid,
+      .access__intro,
+      .ai-models.reveal-on-scroll--visible .ai-models__bg,
+      .ether-section.reveal-on-scroll--visible::after,
+      .ai-models.reveal-on-scroll--visible .ai-models__base,
+      .top-nav__links a,
+      .nav-button,
+      .pill-button,
+      .ghost-button,
+      .mini-button,
+      .hero__media,
+      .biome-card,
+      .mission-block__note,
+      .system-light__media,
+      .ether-section__visual,
+      .ether-stat,
+      .step,
+      .bento-card,
+      .tag-chip,
+      .ai-widget,
+      .eco-card,
+      .eco-overview,
+      .member,
+      .article-large,
+      .article-small,
+      .partner-logo-shell,
+      .partner-logo,
+      .contact__field,
+      .contact__control,
+      .contact__status,
+      .footer__links a,
+      .footer__socials img,
+      .insights__header a,
+      .hero__media img,
+      .biome-card img,
+      .system-light__media > img,
+      .system-light__specimen,
+      .ether-section__visual img,
+      .step__meta img,
+      .bento-card img,
+      .ai-models__base,
+      .ai-widget__frame img,
+      .eco-card__hero img,
+      .member__photo img,
+      .article-large__thumb img,
+      .article-small__thumb img,
+      .pill-button__icon,
+      .nav-button__icon,
+      .mini-button__icon,
+      .ghost-button__circle {
+        transition: none !important;
+        animation: none !important;
+      }
+
+      .reveal-on-scroll {
+        opacity: 1;
+        filter: none;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <header class="top-nav">
+      <img class="top-nav__logo" src="https://www.figma.com/api/mcp/asset/36a365b7-8aa1-4417-bda0-34bd592ee833" alt="Nabat AI" />
+      <nav class="top-nav__links">
+        <a href="#nabat-os">NabatOS</a>
+        <a href="#ecosystem-management">Science-Led Services</a>
+        <a href="#insights">Insights</a>
+        <a href="#team">Team</a>
+      </nav>
+      <a class="nav-button" href="#contact">Book a demo <img class="nav-button__icon" src="https://www.figma.com/api/mcp/asset/fef11ebc-2d36-4994-95d1-a79c2f626bfb" alt="" /></a>
+    </header>
+
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">Nabat.ai</p>
+        <h1 class="hero__title serif" aria-label="The Operating System for Nature"><span class="hero__the">The</span><span class="hero__main">Operating System</span><span class="hero__nature">for Nature</span></h1>
+        <p class="hero__sub">Precise. Scalable. Verifiable.</p>
+        <a class="pill-button" href="#contact">Get in touch <img class="pill-button__icon" src="https://www.figma.com/api/mcp/asset/b0bc2d35-1081-4d41-b421-81f3c48bd1c0" alt="" /></a>
+      </div>
+      <div class="hero__media">
+        <img src="https://www.figma.com/api/mcp/asset/c466d514-2e1d-400f-a36b-6b9411ddab80" alt="Wetland aerial" />
+      </div>
+    </section>
+
+    <section class="problem" id="problem">
+      <div class="problem__grid">
+        <div class="problem__mission">
+          <div class="problem__label">Our mission</div>
+          <h2 class="problem__headline serif">Restore and manage the planet’s most critical ecosystems with <strong>precision</strong>, <strong>scale</strong> and <strong>verifiable</strong> outcomes.</h2>
+        </div>
+        <div class="problem__copy">
+          <p><strong>Nature</strong> is the planet's <strong>most critical infrastructure</strong>. Yet it has no standard operating system. Nabat is building it.</p>
+          <div class="problem__focus">
+            <div class="problem__focus-line"></div>
+            <div class="problem__focus-text">Our Focus</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="biomes">
+      <div class="biomes__grid">
+        <article class="biome-card">
+          <img src="https://www.figma.com/api/mcp/asset/ce2fe2a4-61ea-424b-8d6c-d4ff2a2f718e" alt="Coastal biome" />
+          <div class="biome-card__label serif">Coastal</div>
+        </article>
+        <article class="biome-card">
+          <img src="https://www.figma.com/api/mcp/asset/b4efa899-a1e4-4bfd-9562-a3c7d6aa9c22" alt="Arid biome" />
+          <div class="biome-card__label serif">Arid</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="mission-block">
+      <div class="mission-block__grid">
+        <div>
+          <h2 class="mission-block__title serif">AI-led site suitability scoring</h2>
+          <p class="mission-block__text">Restoration zone mapping integrating hydrology, salinity gradients, sediment dynamics, and species-habitat fit, with interventions tested against multiple failure conditions.</p>
+        </div>
+        <div class="mission-block__note">
+          <p>Coastal and dryland ecosystems are massive carbon sinks, protect inhabited coastlines, and underpin food systems for <strong>2.3 billion people</strong> - yet are dangerously undermanaged and underserved today.</p>
+          <b>Nabat changes that.</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="system-light" id="nabat-os">
+      <div class="system-light__grid">
+        <div>
+          <div class="section-label">Operational System</div>
+          <h2 class="system-light__title serif">nabatOS</h2>
+          <p class="system-light__body">An end-to-end AI platform to restore and manage the planet’s most critical natural ecosystems at scale.</p>
+        </div>
+        <div class="system-light__media">
+          <img src="https://www.figma.com/api/mcp/asset/40a814f2-4fc0-4ef5-ab0a-8c31e71e9de4" alt="nabatOS interface" />
+          <div class="system-light__badge">Live Ether Interface</div>
+          <div class="system-light__specimen"><img src="https://www.figma.com/api/mcp/asset/02dc6e73-5d9a-44c1-b050-36577c0a7a69" alt="Satellite specimen" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ether-section">
+      <div class="ether-section__top">
+        <div>
+          <h2 class="ether-section__title serif">Ether</h2>
+          <div class="ether-section__copy">
+            <p>Nabat's self-supervised geospatial AI foundation model - trained on petabytes of coastal and arid habitat data at mm-level resolution, across millions of hectares.</p>
+            <p>It drives every analysis in NabatOS: from land cover classification and site suitability scoring to biomass estimation, carbon sequestration modeling, and real-time health change detection. Purpose-built for the ecosystems where no off-the-shelf model works.</p>
+          </div>
+        </div>
+        <div class="ether-section__visual">
+          <img src="https://www.figma.com/api/mcp/asset/cfbb73c8-f9bc-46c0-991c-35508d3f9fda" alt="Ether core visual" />
+        </div>
+      </div>
+      <div class="ether-section__stats">
+        <div class="ether-stat">
+          <img class="ether-stat__icon" src="https://www.figma.com/api/mcp/asset/99ccb131-f912-47c9-9226-bde812c1e233" alt="" />
+          <div class="ether-stat__value space">Millions ha</div>
+          <div class="ether-stat__label poppins">coverage</div>
+        </div>
+        <div class="ether-stat">
+          <img class="ether-stat__icon" src="https://www.figma.com/api/mcp/asset/d18fe619-8ad4-4dd1-93c7-5119c9d9ee4f" alt="" />
+          <div class="ether-stat__value space">Petabytes</div>
+          <div class="ether-stat__label poppins">training data</div>
+        </div>
+        <div class="ether-stat">
+          <img class="ether-stat__icon" src="https://www.figma.com/api/mcp/asset/afaed8af-9342-48c6-b2d2-238b2deef2d0" alt="" />
+          <div class="ether-stat__value space">mm-level</div>
+          <div class="ether-stat__label poppins">resolution</div>
+        </div>
+        <div class="ether-stat">
+          <img class="ether-stat__icon" src="https://www.figma.com/api/mcp/asset/22a1a459-c5cf-4ec4-95f0-fd9e2e8bd397" alt="" />
+          <div class="ether-stat__value space">Field-validated</div>
+          <div class="ether-stat__label poppins">by in-house ecologists</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pipeline">
+      <div class="pipeline__slide">
+        <h2 class="pipeline__title serif">NabatOS pipeline</h2>
+        <p class="pipeline__sub">NabatOS manages ecosystems from data capture to verified outcome.</p>
+        <div class="pipeline__grid">
+          <article class="step"><div class="step__meta"><span>Step 01</span><img src="https://www.figma.com/api/mcp/asset/7335dc2f-a8d9-4a0a-add1-0204944010ba" alt="" /></div><h3 class="serif">Data Capture</h3><p>Multi-source ingestion from satellites, drone swarms, and on-ground IoT sensors for high-fidelity baselines.</p></article>
+          <article class="step"><div class="step__meta"><span>Step 02</span><img src="https://www.figma.com/api/mcp/asset/73ba2533-9e93-4887-ba46-152757cb4f3d" alt="" /></div><h3 class="serif">Assessment</h3><p>AI-driven analysis to identify ecosystem health, biodiversity metrics, and carbon sequestration potential.</p></article>
+          <article class="step"><div class="step__meta"><span>Step 03</span><img src="https://www.figma.com/api/mcp/asset/9bfc255a-f887-4e05-a956-e736ded90602" alt="" /></div><h3 class="serif">Planning</h3><p>Generative ecological modeling to design optimal restoration pathways and site-specific interventions.</p></article>
+          <article class="step"><div class="step__meta"><span>Step 04</span><img src="https://www.figma.com/api/mcp/asset/12222c3a-ad1b-4ce9-aeb3-4ff76606c15d" alt="" /></div><h3 class="serif">Restoration</h3><p>Execution through automated dispersal and localized reforestation management systems.</p></article>
+          <article class="step"><div class="step__meta"><span>Step 05</span><img src="https://www.figma.com/api/mcp/asset/e2aa73e5-e4e1-4021-9d59-9f61755a4ddc" alt="" /></div><h3 class="serif">Monitoring</h3><p>Real-time surveillance of growth metrics, water retention, and returning wildlife populations.</p></article>
+          <article class="step"><div class="step__meta"><span>Step 06</span><img src="https://www.figma.com/api/mcp/asset/7b1bfd7f-2d56-4231-81a0-2ba3db5349c9" alt="" /></div><h3 class="serif">Verification</h3><p>Transparent, third-party auditable ledgers of ecological gains and carbon credits.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="access">
+      <div class="access__grid">
+        <div class="access__intro">
+          <div class="section-label">Platform Infrastructure</div>
+          <h2 class="access__title serif">Access<br />NabatOS</h2>
+          <p class="access__body">We offer a variety of ways to collect and interact with rich data</p>
+        </div>
+        <div class="access__bento">
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/a7723003-2540-4a79-ba5d-cb1421a6b74b" alt="" /><h3 class="space">Customer App</h3><p>A simple, user-friendly web app for customers to manage their accounts and services.</p></article>
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/0d156a98-89c4-4337-890b-7e481e5bc3fe" alt="" /><h3 class="space">Field App</h3><p>Dedicated app for data collection and control in the field. Designed for use in all weather conditions.</p></article>
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/e51ebb88-77b4-40f9-8ccc-c6c00fc8ebcd" alt="" /><h3 class="space">Interactive AI Agent</h3><p>Top-notch, proprietary models and fine-tuned technology that go far beyond generic LLMs.</p></article>
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/f0203d47-8800-47ee-b519-8531abc3ec6f" alt="" /><h3 class="space">Geodata Exports</h3><p>Share and analyse data without vendor lock-in.</p></article>
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/76f05fd7-6dc4-4929-8b82-a0fe846176b9" alt="" /><h3 class="space">Public API</h3><p>Integrate NabatOS with any external application. Share, analyse and visualise data, and create reports.</p></article>
+          <article class="bento-card"><img src="https://www.figma.com/api/mcp/asset/7a9f5f10-5941-44e1-9bd1-1b98255062d0" alt="" /><h3 class="space">Internal OS</h3><p>This is the only professional app for viewing and controlling the progress of nature restoration projects.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-models" id="ai-models">
+      <div class="ai-models__bg"></div>
+      <img class="ai-models__base" src="https://www.figma.com/api/mcp/asset/2384ce3a-d415-4514-ad77-269677c32b4d" alt="AI model visualization" />
+      <h2 class="ai-models__title serif">Task-specific AI models powered by Ether</h2>
+
+      <div class="ai-models__tags-left">
+        <span class="tag-chip">Habitat &amp; health change detection</span>
+        <span class="tag-chip">Flora &amp; fauna species ID</span>
+        <span class="tag-chip">Carbon sequestration estimation</span>
+      </div>
+
+      <div class="ai-models__tags-right">
+        <span class="tag-chip">Habitat classification</span>
+        <span class="tag-chip">Land erosion detection</span>
+        <span class="tag-chip">Vegetation height &amp; canopy estimation</span>
+      </div>
+
+      <article class="ai-widget ai-widget--health">
+        <h3 class="ai-widget__title poppins">Habitat health index</h3>
+        <div class="ai-widget__frame"><img src="https://www.figma.com/api/mcp/asset/d77c2992-c786-468c-a949-8322a81b2bb6" alt="Habitat health chart" /></div>
+      </article>
+
+      <article class="ai-widget ai-widget--distribution">
+        <h3 class="ai-widget__title poppins">Seed &amp; sapling distribution</h3>
+        <div class="ai-widget__frame"><img src="https://www.figma.com/api/mcp/asset/d77c2992-c786-468c-a949-8322a81b2bb6" alt="Distribution widget" /></div>
+      </article>
+
+      <article class="ai-widget ai-widget--classification">
+        <h3 class="ai-widget__title poppins">Land cover classification</h3>
+        <div class="ai-widget__frame"><img src="https://www.figma.com/api/mcp/asset/45291175-7343-4280-b217-00d445c9d7cd" alt="Classification widget" /></div>
+      </article>
+    </section>
+
+    <section class="ecosystem" id="ecosystem-management">
+      <div class="ecosystem__head">
+        <h2 class="serif">End-to-End Ecosystem Management</h2>
+        <div></div>
+      </div>
+
+      <div class="ecosystem__cards">
+        <article class="eco-card">
+          <div class="eco-card__hero"><img src="https://www.figma.com/api/mcp/asset/27f755b7-75a2-4aa8-b0d2-8f872ba1007d" alt="Ecosystem intelligence" /></div>
+          <div class="eco-card__copy">
+            <h3 class="serif">Ecosystem Intelligence</h3>
+            <p>Ether, our proprietary geospatial AI model, delivers mm-resolution habitat mapping - species ID, canopy structure, biomass, health change detection - across millions of hectares. Purpose-built for coastal and arid ecosystems.</p>
+          </div>
+        </article>
+        <article class="eco-card">
+          <div class="eco-card__hero"><img src="https://www.figma.com/api/mcp/asset/71831916-9887-4a64-8c80-56e17b594232" alt="Digital MRV" /></div>
+          <div class="eco-card__copy">
+            <h3 class="serif">Digital MRV</h3>
+            <p>Continuous, spatially-comprehensive, AI-powered verification against consistent ecological baselines.</p>
+          </div>
+        </article>
+        <article class="eco-card">
+          <div class="eco-card__hero"><img src="https://www.figma.com/api/mcp/asset/bcb4f68f-8b0e-460d-b4bc-410b6a6865f3" alt="Ecosystem restoration" /></div>
+          <div class="eco-card__copy">
+            <h3 class="serif">Ecosystem Restoration</h3>
+            <p>AI-driven site selection, autonomous drone seeding, and continuous growth monitoring - validated by in-house ecologists in the field.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="eco-overview">
+        <div class="eco-overview__title">See NabatOS in action</div>
+        <div class="eco-overview__action">
+          <div class="eco-overview__line"></div>
+          <a class="pill-button" href="#contact">Book a demo <img class="pill-button__icon" src="https://www.figma.com/api/mcp/asset/b0bc2d35-1081-4d41-b421-81f3c48bd1c0" alt="" /></a>
+          <div class="eco-overview__line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team" id="team">
+      <div class="team__heading">
+        <h2 class="serif">Our team</h2>
+        <p>Built at the intersection of AI, ecology, and large-scale field delivery</p>
+      </div>
+
+      <div class="team__grid">
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/f6fc8b91-9e39-4ed3-9b1d-9d6b052bb491" alt="Reda" /></div><div class="member__name serif">Reda</div><div class="member__role">Chief Executive Officer</div></article>
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/868ecf9f-5c75-4615-9bae-c9bffc12e57c" alt="Mehdi" /></div><div class="member__name serif">Mehdi</div><div class="member__role">Head of Strategy</div></article>
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/4700041a-cc2d-42be-8e23-1a44243b32a4" alt="Georges" /></div><div class="member__name serif">Georges</div><div class="member__role">Vice President of Operations</div></article>
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/f3aab24a-c65e-4cae-a2fc-9a2efda9b22d" alt="Nada" /></div><div class="member__name serif">Nada</div><div class="member__role">Operations Manager</div></article>
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/4720130b-31a1-4bcf-803e-9137f0ffca6e" alt="Taha" /></div><div class="member__name serif">Taha</div><div class="member__role">Chief Product Officer</div></article>
+        <article class="member"><div class="member__photo"><img src="https://www.figma.com/api/mcp/asset/2dede46f-5c32-4179-8d64-9ff8384cee50" alt="Stevie-Joe" /></div><div class="member__name serif">Stevie-Joe</div><div class="member__role">Flight Operations Manager</div></article>
+      </div>
+
+      <div class="team__footer">
+        <div class="team__footer-line"></div>
+        <a class="pill-button" href="#problem">About us <img class="pill-button__icon" src="https://www.figma.com/api/mcp/asset/b0bc2d35-1081-4d41-b421-81f3c48bd1c0" alt="" /></a>
+        <a class="ghost-button" href="#contact">Join us <span class="ghost-button__circle"></span></a>
+        <div class="team__footer-line"></div>
+      </div>
+    </section>
+
+    <section class="insights" id="insights">
+      <div class="insights__header">
+        <h2 class="serif">Insights</h2>
+        <a href="#">View blog</a>
+      </div>
+
+      <div class="insights__grid">
+        <article class="article-large">
+          <div class="article-large__thumb"><img src="https://www.figma.com/api/mcp/asset/8c3bc85c-df97-4b2a-a2d6-ba4dd751e6bc" alt="Research paper" /></div>
+          <div class="article-meta">Research Paper // Nov 2024</div>
+          <h3 class="serif">With data, the UAE's coastlines have a fighting chance</h3>
+          <p>A comprehensive analysis of carbon sequestration rates in temperate rain forests using the Ether v4.2 model.</p>
+        </article>
+
+        <div class="article-stack">
+          <article class="article-small">
+            <div class="article-small__thumb"><img src="https://www.figma.com/api/mcp/asset/6a63c12f-551b-436d-8dfb-cf0de0a291b3" alt="Editorial" /></div>
+            <div>
+              <div class="article-small__meta">Editorial // Oct 2024</div>
+              <h4 class="serif">Technology designed to serve nature: A systems-led approach to restoration at scale</h4>
+              <p>The role of microscopic verification in high-value biodiversity credits.</p>
+            </div>
+          </article>
+
+          <article class="article-small">
+            <div class="article-small__thumb"><img src="https://www.figma.com/api/mcp/asset/86cfc074-f2e4-4ab1-9be9-d03723d25d6b" alt="Field update" /></div>
+            <div>
+              <div class="article-small__meta">Field Update // Sept 2024</div>
+              <h4 class="serif">The Financial Imperative for Investing in Nature-Based Solutions</h4>
+              <p>Nabat AI partners with local communities for large-scale mangrove restoration.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners">
+      <h2 class="serif">Our partners</h2>
+      <div class="partners__row">
+        <div class="partner-logo-shell partner-logo-shell--1"><img class="partner-logo" src="https://www.figma.com/api/mcp/asset/ccf94f93-58df-4b34-abaa-07303aaeca5a" alt="Partner 1" /></div>
+        <div class="partner-logo-shell partner-logo-shell--2"><img class="partner-logo" src="https://www.figma.com/api/mcp/asset/97cc46d6-648f-4f9e-8c00-d03c24d81e40" alt="Partner 2" /></div>
+        <div class="partner-logo-shell partner-logo-shell--3"><img class="partner-logo" src="https://www.figma.com/api/mcp/asset/eaa1fa00-2e60-422b-9fbf-2260b27dfbfb" alt="Partner 3" /></div>
+        <div class="partner-logo-shell partner-logo-shell--4"><img class="partner-logo" src="https://www.figma.com/api/mcp/asset/171dc5db-c406-48df-9243-7d3ede921206" alt="Partner 4" /></div>
+        <div class="partner-logo-shell partner-logo-shell--5"><img class="partner-logo" src="https://www.figma.com/api/mcp/asset/0af08956-8d5a-46f0-9177-7b7ff9953f93" alt="Partner 5" /></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact__shell">
+        <h2 class="serif">Get in touch</h2>
+        <form class="contact__form" id="contact-form" novalidate>
+          <div class="contact__grid">
+            <label class="contact__field">
+              <span class="contact__label">First Name</span>
+              <input class="contact__control" type="text" name="firstName" placeholder="John" />
+            </label>
+            <label class="contact__field">
+              <span class="contact__label">Last Name</span>
+              <input class="contact__control" type="text" name="lastName" placeholder="Smith" />
+            </label>
+            <label class="contact__field">
+              <span class="contact__label">Email</span>
+              <input class="contact__control" type="email" name="email" placeholder="johndoe@example.com" />
+            </label>
+            <label class="contact__field contact__field--phone">
+              <span class="contact__label">Phone Number</span>
+              <span class="contact__flag"><img src="https://www.figma.com/api/mcp/asset/6a00a380-3d6a-4559-8b35-0c4207d40a04" alt="" /> UAE</span>
+              <input class="contact__control" type="tel" name="phone" placeholder="+971 50 123 4567" />
+            </label>
+            <label class="contact__field">
+              <span class="contact__label">Company</span>
+              <input class="contact__control" type="text" name="company" placeholder="Company" />
+            </label>
+            <label class="contact__field contact__field--select">
+              <span class="contact__label">What are you interested in?</span>
+              <select class="contact__control contact__control--select" name="interest">
+                <option value="" selected>Choose a topic</option>
+                <option value="demo">Book a demo</option>
+                <option value="assessment">Land assessment</option>
+                <option value="partnership">Partnership</option>
+                <option value="research">Research collaboration</option>
+              </select>
+            </label>
+            <label class="contact__field contact__field--full">
+              <span class="contact__label">Message</span>
+              <textarea class="contact__control contact__control--message" name="message" placeholder="Project brief, site size, timeline, or restoration goals"></textarea>
+            </label>
+          </div>
+          <div class="contact__submit">
+            <div class="contact__status">Prefer email? <strong>hello@nabat.ai</strong></div>
+            <button class="mini-button" type="submit">Send request <img class="mini-button__icon" src="https://www.figma.com/api/mcp/asset/f13737f8-1a5f-418e-82db-33f010b00769" alt="" /></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__top">
+          <img class="footer__brand" src="https://www.figma.com/api/mcp/asset/429c2845-afbd-40ce-922b-6284fb2f7278" alt="Nabat footer logo" />
+          <nav class="footer__links">
+            <a href="#nabat-os">NabatOS</a>
+            <a href="#ecosystem-management">Science-Led Services</a>
+            <a href="#insights">Insights</a>
+            <a href="#team">Team</a>
+          </nav>
+        </div>
+        <div class="footer__bottom">
+          <div>© 2026 NABAT AI . All rights reserved.</div>
+          <div class="footer__socials">
+            <img src="https://www.figma.com/api/mcp/asset/924936e0-bd0e-4f6f-80e5-674d79e28c3e" alt="Instagram" />
+            <img src="https://www.figma.com/api/mcp/asset/cfa05563-589e-476b-8c6d-58a67e35e1a1" alt="LinkedIn" />
+            <img src="https://www.figma.com/api/mcp/asset/e68e16ad-f9e2-4c67-b77d-a98d6fd6878b" alt="X" />
+            <span>Privacy Policy</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+  <script>
+    (() => {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const revealGroups = [
+        {
+          selector: ".hero, .problem, .biomes, .mission-block, .system-light, .ether-section, .pipeline, .access, .ecosystem, .team, .insights, .partners, .contact, .footer",
+          baseDelay: 120,
+          step: 90,
+          soft: true,
+        },
+        {
+          selector: ".biome-card, .mission-block__note, .ether-stat, .step, .bento-card, .tag-chip, .ai-widget, .eco-card, .eco-overview, .member, .article-large, .article-small, .contact__field",
+          baseDelay: 220,
+          step: 110,
+          soft: false,
+        },
+      ];
+
+      const targets = new Set();
+
+      revealGroups.forEach(({ selector, baseDelay, step, soft }) => {
+        document.querySelectorAll(selector).forEach((element, index) => {
+          element.classList.add("reveal-on-scroll");
+          if (soft) {
+            element.classList.add("reveal-on-scroll--soft");
+          }
+          const revealDelay = Math.min(baseDelay + index * step, 1200);
+          element.style.setProperty("--reveal-delay", `${revealDelay}ms`);
+          element.style.setProperty("--blur-delay", `${Math.max(0, Math.round(revealDelay * 0.04))}ms`);
+          element.style.setProperty("--opacity-delay", `${Math.max(0, Math.round(revealDelay * 0.32))}ms`);
+          targets.add(element);
+        });
+      });
+
+      const splitTextIntoChars = (element, className, variableName, startIndex = 0) => {
+        if (!element) {
+          return startIndex;
+        }
+
+        const titleText = element.textContent || "";
+        element.textContent = "";
+
+        Array.from(titleText).forEach((character, index) => {
+          const span = document.createElement("span");
+          span.className = className;
+          span.setAttribute("aria-hidden", "true");
+          span.textContent = character === " " ? "\u00A0" : character;
+          span.style.setProperty(variableName, `${(startIndex + index) * 55}ms`);
+          element.appendChild(span);
+        });
+
+        return startIndex + titleText.length;
+      };
+
+      let heroCharIndex = 0;
+      heroCharIndex = splitTextIntoChars(document.querySelector(".hero__title .hero__the"), "hero__title-char", "--hero-char-delay", heroCharIndex);
+      heroCharIndex = splitTextIntoChars(document.querySelector(".hero__title .hero__main"), "hero__title-char", "--hero-char-delay", heroCharIndex);
+      splitTextIntoChars(document.querySelector(".hero__title .hero__nature"), "hero__title-char", "--hero-char-delay", heroCharIndex);
+
+      const etherTitle = document.querySelector(".ether-section__title");
+      if (etherTitle) {
+        const titleText = etherTitle.textContent || "";
+        etherTitle.setAttribute("aria-label", titleText.trim());
+        splitTextIntoChars(etherTitle, "ether-section__title-char", "--ether-char-delay");
+      }
+
+      if (reducedMotion) {
+        targets.forEach((element) => {
+          element.classList.add("reveal-on-scroll--visible");
+        });
+        const heroSection = document.querySelector(".hero");
+        if (heroSection) {
+          heroSection.classList.add("hero--title-visible");
+        }
+        const etherSection = document.querySelector(".ether-section");
+        if (etherSection) {
+          etherSection.classList.add("ether-section--title-visible");
+        }
+        return;
+      }
+
+      const root = document.documentElement;
+      const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
+      const parallaxTargets = [
+        { selector: ".hero", cssVar: "--hero-parallax", maxShift: 18, bias: 0.34 },
+        { selector: ".biomes", cssVar: "--biome-parallax", maxShift: 12, bias: 0.5 },
+        { selector: ".system-light", cssVar: "--nabat-parallax", maxShift: 14, bias: 0.48 },
+        { selector: ".pipeline", cssVar: "--pipeline-parallax", maxShift: 26, bias: 0.5 },
+        { selector: ".ecosystem", cssVar: "--eco-card-parallax", maxShift: 8, bias: 0.4 },
+      ];
+
+      let parallaxTicking = false;
+
+      const updateParallax = () => {
+        const viewportHeight = window.innerHeight || 1;
+
+        parallaxTargets.forEach(({ selector, cssVar, maxShift, bias }) => {
+          const element = document.querySelector(selector);
+          if (!element) {
+            return;
+          }
+
+          const rect = element.getBoundingClientRect();
+          const focalPoint = rect.top + rect.height * bias;
+          const normalized = (focalPoint - viewportHeight * 0.5) / viewportHeight;
+          const shift = clamp(-normalized * maxShift, -maxShift, maxShift);
+          root.style.setProperty(cssVar, `${shift.toFixed(2)}px`);
+        });
+
+        const accessSection = document.querySelector(".access");
+        if (accessSection) {
+          const rect = accessSection.getBoundingClientRect();
+          const start = viewportHeight * 0.84;
+          const end = -rect.height * 0.22;
+          const progress = clamp((start - rect.top) / (start - end), 0, 1);
+          const gridShift = 14 + progress * 132;
+
+          accessSection.style.setProperty("--access-grid-shift", `${gridShift.toFixed(2)}px`);
+        }
+
+        parallaxTicking = false;
+      };
+
+      const requestParallaxUpdate = () => {
+        if (parallaxTicking) {
+          return;
+        }
+
+        parallaxTicking = true;
+        window.requestAnimationFrame(updateParallax);
+      };
+
+      window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
+      window.addEventListener("resize", requestParallaxUpdate);
+      requestParallaxUpdate();
+
+      const observer = new IntersectionObserver(
+        (entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("reveal-on-scroll--visible");
+            currentObserver.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.14,
+          rootMargin: "0px 0px -14% 0px",
+        }
+      );
+
+      Array.from(targets).forEach((element, index) => {
+        if (index < 2) {
+          requestAnimationFrame(() => {
+            element.classList.add("reveal-on-scroll--visible");
+            if (element.classList.contains("hero")) {
+              element.classList.add("hero--title-visible");
+            }
+          });
+          return;
+        }
+
+        observer.observe(element);
+      });
+
+      if (etherTitle) {
+        const etherSection = etherTitle.closest(".ether-section");
+        const etherTitleObserver = new IntersectionObserver(
+          (entries, currentObserver) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting || !etherSection) {
+                return;
+              }
+
+              etherSection.classList.add("ether-section--title-visible");
+              currentObserver.unobserve(entry.target);
+            });
+          },
+          {
+            threshold: 0.8,
+            rootMargin: "0px 0px -4% 0px",
+          }
+        );
+
+        etherTitleObserver.observe(etherTitle);
+      }
+
+      const topNav = document.querySelector(".top-nav");
+      if (topNav) {
+        const syncNavState = () => {
+          topNav.classList.toggle("top-nav--scrolled", window.scrollY > 12);
+        };
+
+        window.addEventListener("scroll", syncNavState, { passive: true });
+        syncNavState();
+      }
+
+      const contactForm = document.querySelector(".contact__form");
+      if (contactForm) {
+        const status = contactForm.querySelector(".contact__status");
+        const controls = contactForm.querySelectorAll(".contact__control");
+        const syncFieldState = (control) => {
+          const field = control.closest(".contact__field");
+          if (!field) {
+            return;
+          }
+
+          const value = typeof control.value === "string" ? control.value.trim() : "";
+          field.classList.toggle("contact__field--filled", value.length > 0);
+        };
+
+        controls.forEach((control) => {
+          syncFieldState(control);
+          control.addEventListener("input", () => syncFieldState(control));
+          control.addEventListener("change", () => syncFieldState(control));
+          control.addEventListener("blur", () => syncFieldState(control));
+        });
+
+        contactForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          contactForm.classList.add("contact__form--submitted");
+          if (status) {
+            status.innerHTML = "Request drafted. <strong>We usually reply within 48 hours.</strong>";
+          }
+        });
+      }
+
+    })();
+  </script>
+</body>
+</html>
